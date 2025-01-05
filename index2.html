@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Caculator</title>
+    <style>
+        body {
+            font-family: Arial , sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 80vh;
+            margin: 0;
+            background-color: #f4f4f4;
+        }
+
+        .calculator {
+            width: 100%;
+            max-width: 450px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .screen {
+            background: #222;
+            color: #fff;
+            text-align: right;
+            font-size: 1.5rem;
+            padding: 20px;
+            box-sizing: border-box;
+            height: 80px;
+            overflow: hidden;
+        }
+
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 5px;
+            background: #ccc;
+        }
+
+        .button {
+            background: #f9f9f9;
+            border: none;
+            padding: 15px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: background 0.1s;    
+        }
+
+        .button:hover {
+            background: #2f9a17;
+        }
+
+        .button.operator {
+            background: #bc2bf6;
+            color: #100d0d;
+        }
+
+        .button.operator:hover {
+            background: #5bf13d;
+        }
+
+        .button.equal {
+            background: #5bf93b;
+            color: #fff;
+            grid-column: span 2;
+        }
+
+        .button.equal:hover {
+            background: #218838;
+        }
+
+        .button.clear {
+            background: #dc3545;
+            color: #fff;
+        }
+
+        .button.clear:hover {
+            background: #c82333;
+        }
+
+        @media (max-width: 480px) {
+            .screen {
+                font-size: 1.2rem;
+                padding: 15px;
+            }
+
+            .button {
+                padding: 15px;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <div class="screen" id="display">0</div>
+        <div class="buttons">
+            <button class="button clear" onclick="clearScreen()">C</button>
+            <button class="button operator" onclick="appendValue('/')">/</button>
+            <button class="button operator" onclick="appendValue('*')">*</button>
+            <button class="button operator" onclick="appendValue('-')">-</button>
+
+            <button class="button" onclick="appendValue('7')">7</button>
+            <button class="button" onclick="appendValue('8')">8</button>
+            <button class="button" onclick="appendValue('9')">9</button>
+            <button class="button operator" onclick="appendValue('+')">+</button>
+
+            <button class="button" onclick="appendValue('4')">4</button>
+            <button class="button" onclick="appendValue('5')">5</button>
+            <button class="button" onclick="appendValue('6')">6</button>
+
+            <button class="button" onclick="appendValue('1')">1</button>
+            <button class="button" onclick="appendValue('2')">2</button>
+            <button class="button" onclick="appendValue('3')">3</button>
+            <button class="button equal" onclick="calculate()">=</button>
+
+            <button class="button" onclick="appendValue('0')" style="grid-column: span 2;">0</button>
+        </div>
+    </div>
+
+    <script>
+        let display = document.getElementById('display');
+
+        function clearScreen() {
+            display.textContent = '0';
+        }
+
+        function appendValue(value) {
+            if (display.textContent === '0') {
+                display.textContent = value;
+            } else {
+                display.textContent += value;
+            }
+        }
+
+        function calculate() {
+            try {
+                display.textContent = eval(display.textContent);
+            } catch {
+                display.textContent = 'Error';
+            }
+        }
+    </script>
+    
+</body>
+</html>
