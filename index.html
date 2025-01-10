@@ -3,21 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Caculator</title>
+    <title>NewCalculator</title>
     <style>
         body {
-            font-family: Arial , sans-serif;
+            font-family: Arial, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 80vh;
+            height: 100vh;
             margin: 0;
             background-color: #f4f4f4;
         }
 
         .calculator {
             width: 100%;
-            max-width: 450px;
+            max-width: 400px;
             background: #fff;
             border-radius: 8px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
@@ -28,105 +28,156 @@
             background: #222;
             color: #fff;
             text-align: right;
-            font-size: 1.5rem;
+            font-size: 2rem;
             padding: 20px;
             box-sizing: border-box;
             height: 80px;
-            overflow: hidden;
         }
 
         .buttons {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 5px;
-            background: #ccc;
-        }
-
-        .button {
+            grid-template-columns: repeat(3, 1fr); 
+            gap: 10px;
+            padding: 20px;
             background: #f9f9f9;
-            border: none;
-            padding: 15px;
+        }
+
+        .buttons .button {
+            padding: 20px;
             font-size: 1.5rem;
+            text-align: center;
             cursor: pointer;
-            transition: background 0.1s;    
+            border: none;
+            border-radius: 5px;
+            transition: background 0.2s;
+            background: #ddd;
         }
 
-        .button:hover {
-            background: #2f9a17;
+        .buttons .button:hover {
+            background: #480fe5a1;
         }
 
-        .button.operator {
-            background: #bc2bf6;
-            color: #100d0d;
-        }
-
-        .button.operator:hover {
-            background: #5bf13d;
-        }
-
-        .button.equal {
-            background: #5bf93b;
-            color: #fff;
-            grid-column: span 2;
-        }
-
-        .button.equal:hover {
-            background: #218838;
-        }
-
-        .button.clear {
+        .buttons .button.clear {
             background: #dc3545;
             color: #fff;
         }
 
-        .button.clear:hover {
+        .buttons .button.clear:hover {
             background: #c82333;
         }
 
-        @media (max-width: 480px) {
-            .screen {
-                font-size: 1.2rem;
-                padding: 15px;
-            }
+        .function-buttons {
+            display: flex;
+            justify-content: space-between; 
+            gap: 10px;
+            padding: 10px 20px;
+            background: #f9f9f9;
+        }
 
-            .button {
-                padding: 15px;
-                font-size: 1rem;
-            }
+        .function-buttons .button {
+            flex: 1;
+            padding: 15px;
+            font-size: 1.5rem;
+            text-align: center;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background: #ff7f50;
+            color: #fff;
+            transition: background 0.2s;
+        }
+
+        .function-buttons .button:hover {
+            background: #ff6347;
+        }
+
+        .button.equal {
+            background: #4caf50;
+            color: #fff;
+        }
+
+        .button.equal:hover {
+            background: #45a049;
+        }
+
+        .history {
+            padding: 20px;
+            max-height: 200px;
+            overflow-y: auto;
+            background: #f4f4f4;
+            border-top: 1px solid #ccc;
+        }
+
+        .history-item {
+            font-size: 1rem;
+            margin-bottom: 10px;
+            padding: 5px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .history-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            background: #f4f4f4;
+            border-top: 1px solid #ddd;
+        }
+
+        .history-actions button {
+            background: #ff5252;
+            color: #fff;
+            border: none;
+            padding: 10px 15px;
+            font-size: 1rem;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .history-actions button:hover {
+            background: #e53935;
         }
     </style>
 </head>
 <body>
     <div class="calculator">
+        <div id="display" class="screen">0</div>
 
-        <div class="screen" id="display">0</div>
         <div class="buttons">
             <button class="button clear" onclick="clearScreen()">C</button>
-            <button class="button operator" onclick="appendValue('/')">/</button>
-            <button class="button operator" onclick="appendValue('*')">*</button>
-            <button class="button operator" onclick="appendValue('-')">-</button>
-
             <button class="button" onclick="appendValue('7')">7</button>
             <button class="button" onclick="appendValue('8')">8</button>
             <button class="button" onclick="appendValue('9')">9</button>
-            <button class="button operator" onclick="appendValue('+')">+</button>
-
             <button class="button" onclick="appendValue('4')">4</button>
             <button class="button" onclick="appendValue('5')">5</button>
             <button class="button" onclick="appendValue('6')">6</button>
-
             <button class="button" onclick="appendValue('1')">1</button>
             <button class="button" onclick="appendValue('2')">2</button>
             <button class="button" onclick="appendValue('3')">3</button>
-            <button class="button equal" onclick="calculate()">=</button>
+            <button class="button" onclick="appendValue('0')">0</button>
+            <button class="button" onclick="appendValue('.')">.</button>
+        </div>
 
-            <button class="button" onclick="appendValue('0')" style="grid-column: span 2;">0</button>
+        <div class="function-buttons">
+            <button class="button operator" onclick="appendValue('+')">+</button>
+            <button class="button operator" onclick="appendValue('-')">-</button>
+            <button class="button operator" onclick="appendValue('*')">*</button>
+            <button class="button operator" onclick="appendValue('/')">/</button>
+            <button class="button equal" onclick="calculate()">=</button>
+        </div>
+
+        <div class="history">
+            <h3> Histoty: </h3>
+            <div id="history"></div>
+        </div>
+        <div class="history-actions">
+            <button onclick="clearHistory()">ClearHistory</button>
         </div>
     </div>
 
     <script>
         let display = document.getElementById('display');
-        let history = document.getElementById('history');     
+        let history = document.getElementById('history');
 
         function clearScreen() {
             display.textContent = '0';
@@ -136,18 +187,31 @@
             if (display.textContent === '0') {
                 display.textContent = value;
             } else {
-                display.textContent += value;
+                display.textContent += value; 
             }
         }
 
         function calculate() {
             try {
-                display.textContent = eval(display.textContent);
+                const expression = display.textContent;
+                const result = eval(expression); 
+                addToHistory(`${expression} = ${result}`);
+                display.textContent = result;
             } catch {
-                display.textContent = 'Error';
+                display.textContent = 'Error'; 
             }
         }
+
+        function addToHistory(entry) {
+            const historyItem = document.createElement('div');
+            historyItem.className = 'history-item';
+            historyItem.textContent = entry;
+            history.prepend(historyItem);
+        }
+
+        function clearHistory() {
+            history.innerHTML = '';
+        }
     </script>
-    
 </body>
 </html>
